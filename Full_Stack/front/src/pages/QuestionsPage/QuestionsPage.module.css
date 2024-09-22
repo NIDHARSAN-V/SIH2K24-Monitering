@@ -1,0 +1,136 @@
+.uploadPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  padding: 20px;
+  background-color: #000000;
+}
+
+.heading {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.answerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #000000;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.questionContainer {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.questionText {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.timer {
+  font-size: 1.2rem;
+  color: #888;
+}
+
+.micControls {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.micButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+  color: #007bff;
+}
+
+.micButton:hover {
+  color: #0056b3;
+}
+
+.textInputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.textInput {
+  padding: 10px;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.uploadButton {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.uploadButton:hover {
+  background-color: #0056b3;
+}
+
+.transcriptContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  
+}
+
+.resultsContainer {
+  margin-top: 20px;
+}
+
+.Startbutton {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.Startbutton:hover {
+  background-color: #218838;
+}
+
+.Evalbutton {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #ffc107;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.Evalbutton:hover {
+  background-color: #e0a800;
+}

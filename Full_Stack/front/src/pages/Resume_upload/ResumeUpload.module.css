@@ -1,0 +1,103 @@
+.uploadPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  overflow: auto; /* Allow scrolling */
+}
+
+.heading {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.uploadContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputFile {
+  margin-bottom: 20px;
+  background-color: #1f1f1f;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.uploadButton {
+  background-color: #6200ea;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.uploadButton:hover {
+  background-color: #3700b3;
+}
+
+.skillsContainer {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.skillsHeading {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.skillsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Adjust spacing between items */
+  justify-content: center; /* Center items horizontally */
+  list-style-type: none;
+  padding: 0;
+}
+
+.skillItem {
+  font-size: 1.2rem;
+  color: #76ff03;
+  background-color: #333333;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.start__interview {
+  margin-top: 1rem;
+  background-color: #03dac6;
+  color: #000000;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.start__interview:hover {
+  background-color: #3700b3;
+}
+
+.resultsContainer {
+  padding: 1rem;
+  background-color: #1f1f1f;
+  border-radius: 10px;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  
+}

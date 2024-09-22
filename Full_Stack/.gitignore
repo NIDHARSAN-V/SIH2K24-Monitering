@@ -1,0 +1,9 @@
+# /node_modules
+# /FLASK/models--allenai--t5-small-squad2-question-generation
+# /FLASK/models--deepset--bert-large-uncased-whole-word-masking-squad2
+# /FLASK/models--sentence-transformers--all-MiniLM-L6-v2
+# /FLASK/results
+# /FLASK/scibert_model
+# /FLASK/t5_nmap_model
+# /FLASK/t5_nmap_tokenizer
+

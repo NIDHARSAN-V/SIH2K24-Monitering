@@ -1,0 +1,60 @@
+{
+  "react": {
+    "context_1": "React is a JavaScript library for building user interfaces, primarily for single-page applications. It allows developers to create reusable UI components, manage state efficiently, and render views dynamically.",
+    "context_2": "React uses a virtual DOM to optimize performance. When the state or props of a component change, React re-renders the component and updates only the parts of the DOM that have changed.",
+    "context_3": "React components are the building blocks of any React application. They can be functional or class-based and help in encapsulating the UI logic and rendering."
+  },
+  "node": {
+    "context_1": "Node.js is a runtime environment that allows JavaScript to be used for server-side scripting, enabling developers to build scalable and efficient web applications.",
+    "context_2": "Node.js is built on Chrome's V8 JavaScript engine, which compiles JavaScript directly to native machine code, making it fast and efficient.",
+    "context_3": "Node.js uses an event-driven, non-blocking I/O model, which makes it ideal for building real-time, data-intensive applications that run across distributed devices.",
+    "context_4": "Node.js is widely used for building RESTful APIs, which allow different applications to communicate with each other over the internet.",
+    "context_5": "npm (Node Package Manager) is a package manager for Node.js, providing access to thousands of reusable packages that can be integrated into a Node.js project.",
+    "context_6": "Express.js is a minimal and flexible Node.js web application framework that provides a robust set of features for building web and mobile applications.",
+    "context_7": "Asynchronous programming in Node.js is handled through callbacks, promises, and the async/await pattern, which allows the code to be non-blocking.",
+    "context_8": "Node.js can be used to build microservices architectures, where different parts of an application are separated into independent services that communicate over a network.",
+    "context_9": "Real-time applications like chat applications and live dashboards are commonly built using Node.js due to its ability to handle multiple connections simultaneously.",
+    "context_10": "Node.js supports various database integrations, including MongoDB, MySQL, and PostgreSQL, making it versatile for different types of applications."
+  },
+
+  "cybersecurity": {
+    "context_1": "Cybersecurity is the practice of protecting systems, networks, and data from digital attacks, which aim to steal, damage, or disrupt sensitive information.",
+    "context_2": "Encryption is a fundamental cybersecurity practice that converts data into a coded format, making it unreadable to unauthorized users.",
+    "context_3": "Firewalls are security systems that monitor and control incoming and outgoing network traffic based on predetermined security rules.",
+    "context_4": "Multi-factor authentication (MFA) enhances security by requiring users to provide two or more verification factors to gain access to a resource.",
+    "context_5": "Phishing attacks are a common cybersecurity threat where attackers trick users into revealing sensitive information, such as passwords, by posing as a trusted entity.",
+    "context_6": "Network security involves implementing measures to protect the integrity, confidentiality, and availability of data and resources across a network.",
+    "context_7": "Vulnerability assessments are conducted to identify, quantify, and prioritize vulnerabilities in a system, allowing organizations to address potential security gaps.",
+    "context_8": "Incident response is a key aspect of cybersecurity, involving the identification, containment, eradication, and recovery from security incidents or breaches.",
+    "context_9": "Penetration testing is a proactive cybersecurity measure where security professionals simulate attacks on a system to identify and fix vulnerabilities before they can be exploited.",
+    "context_10": "Cybersecurity policies and procedures provide guidelines for how an organization will protect its information assets and respond to cybersecurity incidents."
+  },
+  
+  "c++": {
+    "context_1": "C++ is a powerful, general-purpose programming language that was developed as an extension of the C language, offering object-oriented features in addition to the procedural programming model of C. It is widely used for developing complex software systems, including operating systems, browsers, games, and real-time systems. The language's ability to directly manipulate hardware resources through low-level programming makes it ideal for performance-critical applications. C++ is also portable, meaning that code written in C++ can be run on various platforms with minimal changes, making it a preferred choice for cross-platform development.",
+    "context_2": "C++ supports both procedural and object-oriented programming paradigms, which means that it can be used to write code in a structured, modular manner or in an object-oriented style that emphasizes the concepts of classes and objects. This dual capability allows developers to use the best features of both paradigms, making C++ extremely versatile. Object-oriented features such as inheritance, polymorphism, and encapsulation allow for the creation of complex data structures and reusable code, which is essential in large-scale software projects. The ability to mix these paradigms provides C++ developers with a high level of flexibility in designing software systems."
+  },
+  "python": {
+    "context_1": "Python is renowned for its simple and readable syntax, which allows developers to write clear and concise code. Unlike languages that use curly braces or semicolons to define code blocks, Python uses indentation to create structure, which enforces good programming habits and makes the code visually neat. This simplicity in syntax lowers the learning curve for beginners and allows experienced developers to write code quickly and efficiently, making Python an ideal language for both prototyping and large-scale development."
+  },
+  "c": {
+    "context_1": "C is a general-purpose, procedural programming language that was originally developed by Dennis Ritchie between 1969 and 1973 at Bell Labs. It has become one of the most widely used programming languages of all time, particularly in systems programming, where performance and direct access to hardware are crucial. C's influence on other languages is profound, having directly inspired languages such as C++, C#, and Objective-C. Its syntax and concepts, like pointers, arrays, and manual memory management, are fundamental to many modern programming paradigms.",
+    "context_2": "One of the defining features of C is its ability to interact directly with memory through the use of pointers. Pointers in C allow developers to manipulate the memory addresses where data is stored, providing a powerful tool for optimizing performance. This capability is especially important in system-level programming, such as operating systems and embedded systems, where memory management is critical. However, working with pointers requires careful attention, as improper use can lead to memory leaks, segmentation faults, and other errors that are difficult to debug."
+  },
+  "java": {
+    "context_1": "Java is a high-level, object-oriented programming language developed by Sun Microsystems in 1995. One of Java's most notable features is its platform independence, achieved through the use of the Java Virtual Machine (JVM). When Java code is compiled, it is transformed into bytecode, which can be executed on any system that has a JVM, making Java applications highly portable. This 'write once, run anywhere' capability has made Java a popular choice for developing cross-platform applications, ranging from desktop software to large-scale enterprise systems.",
+    "context_2": "Java's strong emphasis on object-oriented programming (OOP) is a cornerstone of its design. Everything in Java is treated as an object, and developers use classes and objects to model real-world entities and relationships. Key OOP principles like inheritance, encapsulation, polymorphism, and abstraction are deeply integrated into the language. Inheritance allows new classes to inherit attributes and methods from existing classes, promoting code reuse. Encapsulation ensures that data is protected from unauthorized access by restricting access to certain components. Polymorphism allows methods to perform different tasks based on the object that calls them, and abstraction simplifies complex reality by modeling classes appropriate to the problem."
+  },
+  "html": {
+    "context_1": "HTML (HyperText Markup Language) is the standard language used to create and design web pages and applications. It provides the basic structure of a webpage by defining elements such as headings, paragraphs, links, images, and other content. HTML uses a system of tags and attributes to format and organize content. For example, `<h1>` to `<h6>` tags define headings, while `<p>` tags denote paragraphs. HTML is a foundational technology of the web, and its elements are essential for rendering content in web browsers.",
+    "context_2": "HTML's semantic elements provide meaning to the web page's content and help improve accessibility and SEO. Elements such as `<header>`, `<footer>`, `<article>`, and `<section>` define the structure of the page in a way that is understandable to both browsers and search engines. By using semantic HTML, developers can create more meaningful and well-structured web pages, making it easier for screen readers and search engines to interpret the content."
+  },
+  "css": {
+    "context_1": "CSS (Cascading Style Sheets) is a stylesheet language used to control the presentation and layout of HTML elements on a web page. It allows developers to separate the content of a webpage from its design, making it easier to manage and update the look and feel of a site. CSS properties include styles for text, colors, spacing, positioning, and responsiveness. For example, properties like `color`, `font-size`, and `margin` are used to style text and layout elements.",
+    "context_2": "CSS provides powerful layout techniques such as Flexbox and Grid, which enable developers to create complex and responsive designs with ease. Flexbox is ideal for creating one-dimensional layouts, where items are aligned in rows or columns, while Grid offers a two-dimensional layout system, allowing for precise control over rows and columns. Additionally, CSS media queries enable responsive design by applying different styles based on screen size, device orientation, and other factors."
+  },
+  "javascript": {
+    "context_1": "JavaScript is a high-level, dynamic programming language that is primarily used for adding interactivity and functionality to web pages. It enables developers to create dynamic content, such as interactive forms, animations, and real-time updates without requiring a page reload. JavaScript runs in the browser, allowing it to interact with HTML and CSS, manipulate the Document Object Model (DOM), and handle events. It is a key component of web development, often used in conjunction with HTML and CSS.",
+    "context_2": "JavaScript supports various programming paradigms, including procedural, object-oriented, and functional programming. Features such as closures, promises, and async/await facilitate the handling of asynchronous operations and complex logic. The language's versatility is further enhanced by its ecosystem, which includes numerous libraries and frameworks like React, Angular, and Vue.js, designed to streamline development and build modern web applications."
+  }
+}

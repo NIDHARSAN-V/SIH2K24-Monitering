@@ -2,3 +2,16 @@ Moniter/myvenv
 Moniter/shape_predictor_68_face_landmarks.dat
 Mointer/Face_WTC/node_modules
 
+Full_Stack/node_modules
+Full_Stack/FLASK/Model_backend/node_modules
+Full_Stack/FLASK/models--allenai--t5-small-squad2-question-generation
+Full_Stack/FLASK/models--deepset--bert-large-uncased-whole-word-masking-squad2
+Full_Stack/FLASK/models--sentence-transformers--all-MiniLM-L6-v2
+Full_Stack/FLASK/results
+Full_Stack/FLASK/scibert_model
+Full_Stack/FLASK/t5_nmap_model
+Full_Stack/FLASK/t5_nmap_tokenizer
+Full_Stack/server
+
+
+

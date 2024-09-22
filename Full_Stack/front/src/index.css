@@ -1,0 +1,109 @@
+/* google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/*root*/
+:root {
+  --header-height: 3rem;
+  /* fontweights and family */
+  --body-font: "Poppins", sans-serif;
+  --big-font: 3.5rem;
+  --h1-font: 2.25rem;
+  --h2-font: 1.5rem;
+  --h3-font: 1.25rem;
+  --normal-font: 1rem;
+  --small-font: 0.875rem;
+  --smaller-font: 0.813rem;
+  --tiny-font: 0.625rem;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semi-bold: 600;
+  /* zindex */
+  --z-tooltip: 10;
+  --fixed: 100;
+  --z-modal: 1000;
+  /* color */
+  --hue: 0;
+  --sat: 0%;
+  /* --title-color: hsl(var(--hue), var(--sat), 80%); 
+  --title-color-dark: hsl(var(--hue), var(--sat), 100%); 
+  --text-color: hsl(var(--hue), var(--sat), 75%); 
+  --body-color: hsl(var(--hue), var(--sat), 10%); 
+  --container-color: hsl(0, 0%, 15%);
+  --container-color-opp: white;
+  --modal-bg-color: rgba(255, 255, 255, 0.1); 
+  --profile-box-shadow: rgba(255, 255, 255, 0.1) 0px -23px 25px 0px , 
+  rgba(255, 255, 255, 0.15) 0px -36px 30px 0px inset, 
+  rgba(255, 255, 255, 0.1) 0px -79px 40px 0px inset, 
+  rgba(255, 255, 255, 0.1) 0px 2px 1px, 
+  rgba(255, 255, 255, 0.1) 0px 4px 2px, 
+  rgba(255, 255, 255, 0.1) 0px 8px 4px, 
+  rgba(255, 255, 255, 0.1) 0px 16px 8px, 
+  rgba(255, 255, 255, 0.1) 0px 32px 16px; */
+  --title-color: hsl(var(--hue), var(--sat), 80%);
+  --title-color-dark: hsl(var(--hue), var(--sat), 100%);
+  --text-color: hsl(var(--hue), var(--sat), 75%);
+  --body-color: hsl(var(--hue), var(--sat), 10%);
+  --container-color: hsl(0, 0%, 15%);
+  --container-color-opp: white;
+  --modal-bg-color: rgba(255, 255, 255, 0.1);
+  --profile-box-shadow: rgba(255, 255, 255, 0.1) 0px -23px 25px 0px,
+    rgba(255, 255, 255, 0.15) 0px -36px 30px 0px inset,
+    rgba(255, 255, 255, 0.1) 0px -79px 40px 0px inset,
+    rgba(255, 255, 255, 0.1) 0px 2px 1px,
+    rgba(255, 255, 255, 0.1) 0px 4px 2px,
+    rgba(255, 255, 255, 0.1) 0px 8px 4px,
+    rgba(255, 255, 255, 0.1) 0px 16px 8px,
+    rgba(255, 255, 255, 0.1) 0px 32px 16px;
+  
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body,
+button,
+input,
+textarea {
+  font-family: var(--body-font);
+  font-size: var(--normal-font);
+}
+
+body {
+  background-color: var(--body-color);
+  color: var(--text-color);
+}
+
+h1,
+h2,
+h3 {
+  color: var(--title-color);
+  font-weight: var(--font-semi-bold);
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
