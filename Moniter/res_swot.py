@@ -1,10 +1,4 @@
-import os
-from dotenv import load_dotenv, find_dotenv
-from flask import Flask, render_template, request
-from langchain_groq import ChatGroq
-from tasks import create_technical_term_extraction_task, create_question_generation_task
-import re
-import random  # Import random module
+c # Import random module
 
 # Load environment variables
 load_dotenv(find_dotenv())
