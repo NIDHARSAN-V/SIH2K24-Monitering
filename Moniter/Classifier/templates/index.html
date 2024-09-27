@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classify Question</title>
+    <style>
+        /* Flex layout for body */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Smooth animation for response container */
+        .fade-in {
+            animation: fadeIn 1s ease-in forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Grid layout for the form */
+        form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            width: 100%;
+            max-width: 600px;
+            background-color: #1e1e1e;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        label {
+            font-size: 1.3rem;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background-color: #333;
+            color: #e0e0e0;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            background-color: #444;
+            outline: none;
+        }
+
+        button {
+            background-color: #6200ea;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #3700b3;
+        }
+
+        /* Responsive container for form and result */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        /* Context and classification result display styles */
+        #contextDisplay,
+        .classificationResult {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            width: 100%;
+        }
+
+        /* Headings with accent color */
+        h1,
+        h2 {
+            color: #bb86fc;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Classify Question by Difficulty</h1>
+
+    <div class="container">
+        <form method="POST" action="/">
+            <label for="domain">Domain:</label>
+            <input type="text" id="domain" name="domain" required><br>
+
+            <label for="question">Question:</label>
+            <textarea id="question" name="question" required></textarea><br>
+
+            <button type="submit">Classify</button>
+        </form>
+
+        {% if difficulty %}
+        <div class="classificationResult fade-in">
+            <h2>Classification Result</h2>
+            <p>Domain: {{ domain }}</p>
+            <p>Question: {{ question }}</p>
+            <p>Difficulty: {{ difficulty }}</p>
+
+            <button onclick="addContextToDB()">Add to DB</button>
+        </div>
+        {% endif %}
+
+        <h2>Fetch Domain Contexts</h2>
+        <form id="fetchForm">
+            <label for="fetchDomain">Domain:</label>
+            <input type="text" id="fetchDomain" required>
+            <button type="button" onclick="fetchDomainContexts()">Fetch</button>
+        </form>
+
+        <div id="contextDisplay"></div>
+    </div>
+
+    <script>
+        function addContextToDB() {
+            const domain = "{{ domain }}";
+            const difficulty = "{{ difficulty }}";
+            const context = "{{ question }}";
+
+            fetch("/add-context", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ domain, difficulty, context })
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message || data.error))
+            .catch(error => console.error('Error:', error));
+        }
+
+        function fetchDomainContexts() {
+            const domain = document.getElementById("fetchDomain").value;
+
+            fetch(`/get-context/${domain}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    const contextDisplay = document.getElementById("contextDisplay");
+                    contextDisplay.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                    contextDisplay.classList.add('fade-in'); // Add fade-in animation
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+
+</html>
