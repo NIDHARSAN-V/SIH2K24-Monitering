@@ -4,28 +4,29 @@ from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
 from langchain_groq import ChatGroq
 
-
+# Load environment variables
 load_dotenv(find_dotenv())
 
+# Set the Groq API key
 os.environ["GROQ_API_KEY"] = "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"
 
-
+# Initialize LangChain model
 llm = ChatGroq(model="mixtral-8x7b-32768", temperature=0)
 
+# Create Flask app
 app = Flask(__name__)
 
-
+# Connect to MongoDB
 client = MongoClient("mongodb://localhost:27017/")
 db = client["classy"]
 domains_collection = db["Classify"]
 print("DB connected")
 
-
+# Define the prompt template for classification
 def prompt_template(question, domain):
     return f"""
 You are an expert in {domain} and skilled at difficulty classification. Your task is to classify the complexity of the following context into one of three categories: 
 "easy", "medium", or "hard." Use the criteria below to guide your classification.
-
 
 Context: {question}
 
@@ -50,13 +51,13 @@ Context: {question}
 Carefully review the provided context and classify it based on the complexity required to understand or implement the concept. Provide your classification in a single word: easy, medium, hard.
 """
 
-
+# Function to classify the question
 def classify_question(llm, question, domain):
     prompt = prompt_template(question, domain)
     response = llm.invoke(prompt)
     return response
 
-
+# Function to extract a single-word classification
 def single_word(text):
     if "easy" in text.lower():
         return "easy"
@@ -67,34 +68,33 @@ def single_word(text):
     else:
         return "new"
 
-
+# Route for the main page
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
         domain = request.form["domain"]
         question = request.form["question"]
-        
 
         classification = classify_question(llm, question, domain)
         difficulty = single_word(classification.content)
-        
+
         print("Difficulty : ", classification.content)
-        
+
         return render_template("index.html", difficulty=difficulty, domain=domain, question=question)
-    
+
     return render_template("index.html")
 
-
+# Route to add context to the database
 @app.route('/add-context', methods=['POST'])
 def add_Context_db():
     data = request.json
-    
+
     domain = data.get('domain', '').lower()
     difficulty = data.get('difficulty', '').lower()
     context = data.get('context', '')
 
     domain_data = domains_collection.find_one({"name": domain})
-    
+
     if domain_data:
         if difficulty in domain_data['Difficulty']:
             domains_collection.update_one(
@@ -117,16 +117,16 @@ def add_Context_db():
         domains_collection.insert_one(new_domain)
         return jsonify({"message": "Newly inserted domain."}), 201
 
-
+# Route to get context based on domain
 @app.route('/get-context/<domain>', methods=['GET'])
 def get_context(domain):
     domain_data = domains_collection.find_one({"name": domain.strip().lower()})
-    
+
     if domain_data:
         return jsonify({"name": domain_data['name'], "difficulty": domain_data['Difficulty']}), 200
     else:
         return jsonify({"error": "Domain not found."}), 404
 
-
+# Run the Flask app
 if __name__ == "__main__":
     app.run(debug=True)
