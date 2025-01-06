@@ -1,10 +1,14 @@
 from flask import Flask, request, jsonify
 import google.generativeai as genai
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 
-# Configure the Google Generative AI API key
-genai.configure(api_key="AIzaSyBhXmLdc5br5YQguZfVSE4qcbbS6jP7QdE")
+load_dotenv()
+
+# Access the API key
+api_key = os.getenv("gemini_api_key")
 model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
 def evaluate_answer(reference_answer, candidate_answer, question):

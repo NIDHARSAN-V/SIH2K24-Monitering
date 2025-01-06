@@ -4,9 +4,12 @@ import google.generativeai as genai
 import os
 import re
 from flask_cors import CORS
+from dotenv import load_dotenv
 
+load_dotenv()
 
-genai.configure(api_key="AIzaSyBhXmLdc5br5YQguZfVSE4qcbbS6jP7QdE")
+# Access the API key
+api_key = os.getenv("gemini_api_key")
 
 app = Flask(__name__)
 CORS(app)  
@@ -33,17 +36,26 @@ def extract_text_from_pdf(pdf_file):
     return text
 
 def map_domain(extracted_domain):
-    domain_mapping = {
-        'computer science': 'Computer Science',
-        'electronics': 'Electronics',
-        'mechanical': 'Mechanical',
-        'electrical': 'Electrical'
-    }
+    # Use regex to find the relevant domain in the extracted string
+    degree_domain_regex = r"(CSE|ECE|MECH|Electrical|Computer Science|Electronics|Mechanical|Electrical)"
+    match = re.search(degree_domain_regex, extracted_domain, re.IGNORECASE)
 
-    normalized_domain = extracted_domain.lower()
-    for key in domain_mapping:
-        if key in normalized_domain:
-            return domain_mapping[key]
+    if match:
+        normalized_domain = match.group(0).lower()
+        domain_mapping = {
+            'computer science': 'Computer Science',
+            'cse': 'Computer Science',
+            'electronics': 'Electronics',
+            'ece': 'Electronics',
+            'mechanical': 'Mechanical',
+            'mech': 'Mechanical',
+            'electrical': 'Electrical'
+        }
+
+        for key in domain_mapping:
+            if key in normalized_domain:
+                return domain_mapping[key]
+    
     return "Unknown"
 
 def calculate_skill_match(domain, resume_skills):
@@ -71,9 +83,10 @@ def upload_resume():
     
     file = request.files['resume']
     extracted_text = extract_text_from_pdf(file)
+    print("Extracted Text:",extracted_text)
 
     input_prompt_degree = """
-    Get the degree with domain mentioned in this resume like (BE Computer Science and Engineering, BE Electronics, or BTech IT). Don't add extra contents, just give me the actual degree with domain.
+    Get the domain mentioned in this resume like (BE Computer Science and Engineering or BE Electronics or BTECH IT) based on the data given. Don't add extra contents, just give me the actual degree with domain.
     """
     
     input_prompt_skills = """
@@ -102,4 +115,4 @@ def upload_resume():
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)

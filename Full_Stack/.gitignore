@@ -1,9 +1,19 @@
-# /node_modules
-# /FLASK/models--allenai--t5-small-squad2-question-generation
-# /FLASK/models--deepset--bert-large-uncased-whole-word-masking-squad2
-# /FLASK/models--sentence-transformers--all-MiniLM-L6-v2
-# /FLASK/results
-# /FLASK/scibert_model
-# /FLASK/t5_nmap_model
-# /FLASK/t5_nmap_tokenizer
-
+/*node_modules
+/FLASK/models--allenai--t5-small-squad2-question-generation
+/FLASK/models--deepset--bert-large-uncased-whole-word-masking-squad2
+/FLASK/models--sentence-transformers--all-MiniLM-L6-v2
+/FLASK/results
+/FLASK/scibert_model
+/FLASK/t5_nmap_model
+/FLASK/t5_nmap_tokenizer
+/FLASK/.env
+/FLASK/SepSocket.py
+/FLASK/venv
+/FLASK/venv2
+/FLASK-HARD
+/Classifier
+/FLASK/templates
+/front/node_modules
+/FLASK/Mongo_Backend/node_modules
+/FLASK/Model_backend/node_modules
+/FLASK/.locks

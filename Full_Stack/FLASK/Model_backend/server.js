@@ -1,73 +1,84 @@
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
-const fs = require("fs");
+const { Server } = require('socket.io');
+const http = require('http');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: 'http://localhost:5173',
+        methods: ['GET', 'POST']
+    }
+});
 
+app.use(express.json());
 app.use(cors({
-    origin: `http://localhost:5173`,  
-    methods: ['POST', 'GET'], 
-    credentials: true        
+    origin: 'http://localhost:5173',
+    methods: ['POST', 'GET'],
+    credentials: true
 }));
 
-app.post('/api/generate', async (req, res) => {
-    console.log(req.body);
-    var domain = req.body.inp;
-    // domain = "react"
-    console.log("================================" , domain);
-    
-    const data = fs.readFileSync('contexts.json');
-    const Contexts = JSON.parse(data);
-    
-    const contextEntries = Object.entries(Contexts[domain] || {});
-    let allQuesAns = [];
+io.on('connection', (socket) => {
+    console.log('Client connected:', socket.id);
 
-    for (const [key, context] of contextEntries) {
-        console.log(context);
-        
-        try {
-            const response = await axios.post('http://localhost:5004/api/generate', {
-                inp: context
-            });
-
-            // Extract the questions and answers array from the response
-            const questionsAndAnswers = response.data.questions_and_answers;
-
-            // Merge it into the allQuesAns array
-            allQuesAns = allQuesAns.concat(questionsAndAnswers);
-
-        } catch (error) {
-            console.error('Error fetching data from Flask API:', error);
-            res.status(500).json({ error: 'Error fetching data from Flask API' });
+    socket.on('generateQuestions', async ({ inp, Domain, Skills }) => {
+        if (!Array.isArray(Skills) || Skills.length === 0) {
+            socket.emit('error', { error: "Skills must be a non-empty array" });
             return;
         }
-    }
-    
-    // Return the merged array
-    res.json(allQuesAns);
+
+        for (const skill of Skills) {
+            try {
+                const paraResponse = await axios.post('http://localhost:5500/api/admin/getParagraph', { skill });
+
+                if (paraResponse.data === 'not found') {
+                    socket.emit('qnaStatus', { skill, status: 'not found', message: `No paragraph found for ${skill}` });
+                    continue;
+                }
+
+                const flaskData = { data: paraResponse.data };
+                const response = await axios.post('http://localhost:5004/api/generate', flaskData, {
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                const qna = response.data.questions_and_answers;
+                socket.emit('qnaGenerated', { skill, qna });
+
+            } catch (error) {
+                console.error(`Error processing skill "${skill}":`, error.message);
+                socket.emit('error', { error: `Error generating questions for skill: ${skill}` });
+            }
+        }
+
+        socket.emit('generationComplete');
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Client disconnected:', socket.id);
+    });
 });
 
 
-app.use("/api/evaluate" , async function(req,res)
-{
-    try{
-           console.log(req.body)
 
-           const QandA = req.body.QandA
+
+app.use("/api/evaluate", async function (req, res) {
+    try {
+        console.log(req.body)
+
+        const QandA = req.body.QandA
         //    console.log(QandA)
-           const response_eval = await axios.post("http://localhost:5003/evaluate" , {"QandA":QandA})
+        const response_eval = await axios.post("http://localhost:5003/evaluate", { "QandA": QandA })
         //    console.log(response_eval.data)
-           res.json({"QandA_Eval":response_eval.data})
+        res.json({ "QandA_Eval": response_eval.data })
     }
-    catch(error)
-    {
+    catch (error) {
         console.log(error)
     }
 })
-
-app.listen(5001, () => {
-    console.log(`Server is running on 5001`);
+server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });

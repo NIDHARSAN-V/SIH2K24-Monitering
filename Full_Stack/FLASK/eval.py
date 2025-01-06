@@ -174,9 +174,11 @@ def evaluate():
         print()
         print("Count++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         print()
-        reference_answer = item['reference_answer']
-        candidate_answer = item['candidate_answer']
-        question = item['question']
+        reference_answer = item.get('reference_answer')
+        candidate_answer = item.get('candidate_answer')
+        question = item.get('question')
+        print("ANS",reference_answer)
+        
 
 
         if not all([reference_answer, candidate_answer, question]):

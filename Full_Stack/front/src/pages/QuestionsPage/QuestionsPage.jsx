@@ -6,7 +6,7 @@ import { ReportContext } from '../Context/ReportContext';
 import PulseLoader from 'react-spinners/PulseLoader';
 import { useNavigate } from 'react-router-dom';
 import { FaMicrophone, FaMicrophoneSlash } from 'react-icons/fa';
-
+import socket from '../../socket';
 function QuestionsPage() {
   const { resumeData } = useContext(ResumeContext);
   const { eval_res, setEvalRes } = useContext(ReportContext);
@@ -23,6 +23,7 @@ function QuestionsPage() {
   const [micOn, setMicOn] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
   const [transcript, setTranscript] = useState('');
+  const [qnaArray, setQnaArray] = useState([]); // Store all QNA for each skill (indexed by dom_count)
 
   const navigate = useNavigate();
 
@@ -32,19 +33,67 @@ function QuestionsPage() {
   }, [resumeData]);
 
   useEffect(() => {
+    socket.on('qnaGenerated', ({ skill, qna }) => {
+      console.log('QNA Generated for skill:', skill, qna);
+
+      const qaString = qna[0]; // Extract the qna string
+      const questionsAndAnswers = processQuestionsAndAnswers(qaString);
+      console.log("QBA", questionsAndAnswers)
+      if (dom_count === 0) {
+        // Directly display questions for the first skill
+        if (!askq) {
+          setSetOfQuestions(questionsAndAnswers);
+          setAskq(true);
+          setLoading(false);
+        }
+
+        else {
+          const updatedQnaArray = [...qnaArray];
+          updatedQnaArray[dom_count] = questionsAndAnswers;
+          console.log(updatedQnaArray[dom_count]);
+          setQnaArray(updatedQnaArray);
+          setLoading(false);
+        }
+      }
+    });
+
+    socket.on('qnaStatus', ({ skill, message }) => {
+      console.warn(`Status for ${skill}:`, message);
+      if (message.includes('not found')) {
+        handlenextDomain(); // Call your function to proceed to the next domain
+      }
+    });
+
+    socket.on('generationComplete', () => {
+      console.log('All skills processed.');
+    });
+
+    socket.on('error', (error) => {
+      console.error('Socket Error:', error);
+    });
+
+    return () => {
+      socket.off('qnaGenerated');
+      socket.off('qnaStatus');
+      socket.off('generationComplete');
+      socket.off('error');
+    };
+  }, [askq, dom_count]);
+
+  useEffect(() => {
     if (askq && setOfQuestions.length > 0) {
       setAnswer('');
       setTranscript('');
       setMicOn(false)
-      setTimeLeft(20); 
+      setTimeLeft(20);
       const timer = setInterval(() => {
         setTimeLeft((prev) => prev - 1);
       }, 1000);
-  
+
       const timeout = setTimeout(() => {
         submitAnswer();
       }, 20000); // Change timeout to 20,000 milliseconds
-  
+
       return () => {
         setMicOn(false);
         clearInterval(timer);
@@ -52,7 +101,7 @@ function QuestionsPage() {
       };
     }
   }, [qindex, askq, setOfQuestions.length]);
-  
+
 
   const submitAnswer = () => {
     const updatedQuestions = [...setOfQuestions];
@@ -62,16 +111,20 @@ function QuestionsPage() {
     setAnswer('');
     setTranscript('');
     setShowTranscript(false);
-
+    console.log("QINDEX", qindex);
     if (qindex < setOfQuestions.length - 1) {
       setQindex(qindex + 1);
+
       setAnswer('');
       setTranscript('');
     } else {
       setAskq(false);
+      setQindex(0);
+
       console.log('All questions answered:', updatedQuestions);
     }
   };
+
 
   const handleTranscriptReady = (transcriptText) => {
     setAnswer(transcriptText);
@@ -164,37 +217,37 @@ function QuestionsPage() {
       alert('Error evaluating answers. Check console for details.');
     }
   };
+  // When receiving data from Flask, process the Q&A
 
-  const handlePushToNode = async () => {
-    try {
-      console.log(eval_res);
-      setQindex(0);
-      setLoading(true);
-      console.log('Resume Data:', resumeData.matched_skills[dom_count]);
-
-      if (dom_count < resumeData.matched_skills.length) {
-        const domain = resumeData.matched_skills[dom_count];
-        setfinal_dom(domain);
-        const res = await axios.post('http://localhost:5001/api/generate', {
-          inp: domain,
-          Domain: mapDomain,
-          Skills: mapSkills,
-        });
-        console.log('Questions Response:', res.data);
-        setSetOfQuestions(res.data);
-        setAskq(true);
-      } else {
-        navigate('/report');
-        alert('No more skills to process.');
-      }
-    } catch (error) {
-      console.error('Error generating questions:', error);
-      alert('Error generating questions. Check console for details.');
-    } finally {
-      setLoading(false);
-    }
+  const processQuestionsAndAnswers = (qaString) => {
+    const qaArray = qaString.split('\n\n').map((item) => {
+      const questionAnswer = item.split('\n');
+      return {
+        question: questionAnswer[0]?.replace(/^\d+\.\s*Question:\s*/, '').trim(), // Remove "1. Question:" from the question
+        reference_answer: questionAnswer[1]?.replace('Answer:', '').trim(), // Remove "Answer:" from the answer
+      };
+    });
+    return qaArray;
   };
 
+
+  const handlePushToNode = () => {
+    const skillsToProcess = resumeData.matched_skills;
+    const domain = resumeData.mapped_domain[dom_count];
+    setLoading(true);
+    socket.emit('generateQuestions', { inp: domain, Domain: resumeData.mapped_domain, Skills: skillsToProcess });
+  };
+
+  const handlenextDomain = () => {
+    setLoading(true);
+    const nextQNA = qnaArray[dom_count];
+
+    setSetOfQuestions(nextQNA);
+    setAskq(true);
+    setLoading(false);
+    setdom_count(dom_count + 1);
+
+  };
   return (
     <div className={styles.uploadPage}>
       <h1 className={styles.heading}>Interview Question</h1>
@@ -252,6 +305,9 @@ function QuestionsPage() {
               <h1>Question in Domain: {dom_count}</h1>
               <button onClick={handlePushToNode} className={styles.Startbutton}>
                 Click To Start
+              </button>
+              <button onClick={handlenextDomain} className={styles.Startbutton}>
+                Go to Next Domain
               </button>
               <br />
               <br />

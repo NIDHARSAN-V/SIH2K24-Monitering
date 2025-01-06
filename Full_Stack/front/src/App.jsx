@@ -6,19 +6,24 @@ import { ResumeProvider } from './pages/Context/ResumeContext';
 import Navbar from './pages/Navbar/Navbar';
 import Report from './pages/Report/Report';
 import { ReportProvider } from './pages/Context/ReportContext';
-
+import Login from './pages/Login/Login';
+import Register from './pages/Register/Register';
+import Admin from './pages/Admin/Admin';
 function App() {
   return (
     <ResumeProvider>
-       <ReportProvider>
-      <Navbar/>
-      <Router>
-        <Routes>
-          <Route path="/" element={<ResumeUpload />} />
-          <Route path="/interview" element={<QuestionsPage />} />
-          <Route path='/report' element={<Report/>}/>
-        </Routes>
-      </Router>
+      <ReportProvider>
+        <Navbar />
+        <Router>
+          <Routes>
+            <Route path="/" element={<ResumeUpload />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/admin' element={<Admin />} />
+            <Route path='register' element={<Register />} />
+            <Route path="/interview" element={<QuestionsPage />} />
+            <Route path='/report' element={<Report />} />
+          </Routes>
+        </Router>
       </ReportProvider>
     </ResumeProvider>
   );
